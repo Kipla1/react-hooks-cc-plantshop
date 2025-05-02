@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import InStockButton from "./InStockButton";
+import OutOfStockButton from "./OutOfStockButton";
+import SoldOutButton from "./SoldOutButton";
 
 function PlantCard({ plant, toggleStock, updatePrice, deletePlant }) {
   const { id, name, image, price, inStock = true } = plant;
   const [isEditing, setIsEditing] = useState(false);
   const [newPrice, setNewPrice] = useState(price);
-  
+
   const handlePriceUpdate = () => {
     updatePrice(id, newPrice);
     setIsEditing(false);
@@ -14,7 +17,7 @@ function PlantCard({ plant, toggleStock, updatePrice, deletePlant }) {
     <li className="card" data-testid="plant-item">
       <img src={image} alt={name} />
       <h4>{name}</h4>
-      
+
       {isEditing ? (
         <div>
           <input
@@ -37,14 +40,17 @@ function PlantCard({ plant, toggleStock, updatePrice, deletePlant }) {
           )}
         </div>
       )}
-      
-      {inStock ? (
-        <button className="primary" onClick={() => toggleStock(id)}>
-          In Stock
-        </button>
-      ) : (
-        <button onClick={() => toggleStock(id)}>Out of Stock</button>
-      )}
+
+      <div>
+        {inStock ? (
+          <OutOfStockButton onClick={() => toggleStock(id)} disabled={!inStock} />
+        ) : (
+          <>
+            <InStockButton onClick={() => toggleStock(id)} disabled={inStock} />
+            <SoldOutButton />
+          </>
+        )}
+      </div>
     </li>
   );
 }

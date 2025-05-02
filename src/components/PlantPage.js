@@ -8,22 +8,26 @@ function PlantPage() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("https://plantsy-server.vercel.app/plants")
+    fetch("http://localhost:6001/plants")
       .then((response) => response.json())
       .then((data) => setPlants(data));
   }, []);
 
-  const addPlant = (newPlant) => {
-    fetch("https://plantsy-server.vercel.app/plants", {
-      method: "POST",
-      headers: {
-        "Content-Type": "Application/JSON",
-      },
-      body: JSON.stringify(newPlant),
-    })
-      .then((response) => response.json())
-      .then((data) => setPlants([...plants, data]));
-  };
+
+const addPlant = (newPlant) => {
+  return fetch("http://localhost:6001/plants", {
+    method: "POST",
+    headers: {
+      "Content-Type": "Application/JSON",
+    },
+    body: JSON.stringify(newPlant),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      setPlants([...plants, data]);
+      return data; 
+    });
+};
 
   const toggleStock = (plantId) => {
     const updatedPlants = plants.map((plant) => {
@@ -36,7 +40,7 @@ function PlantPage() {
   };
 
   const updatePrice = (plantId, newPrice) => {
-    fetch(`https://plantsy-server.vercel.app/plants/${plantId}`, {
+    fetch(`http://localhost:6001/plants/${plantId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "Application/JSON",
@@ -52,9 +56,8 @@ function PlantPage() {
       });
   };
 
-  // Function to delete a plant
   const deletePlant = (plantId) => {
-    fetch(`https://plantsy-server.vercel.app/plants/${plantId}`, {
+    fetch(`http://localhost:6001/plants/${plantId}`, {
       method: "DELETE",
     })
       .then(() => {

@@ -41,12 +41,6 @@
       "name": "Fiddle Leaf Fig",
       "image": "./images/fiddle-leaf-fig.jpg",
       "price": 55
-    },
-    {
-      "name": "Bonsai",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL918F3-MXzt9s-ZGaJ1uehfV3EXZtejBEyw&s",
-      "price": 34,
-      "id": 8
     }
   ]
 }
